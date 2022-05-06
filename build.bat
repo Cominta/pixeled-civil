@@ -1,0 +1,1 @@
+g++ *.cpp  -o build/windows/main.exe -LD:\lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
