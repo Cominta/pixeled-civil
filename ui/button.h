@@ -8,7 +8,7 @@ class Button
 {
     private:
         sf::RenderWindow* window;
-        sf::Sprite* shape;
+        sf::Sprite* sprite;
 
         sf::Texture* idle;
         sf::Texture* hover;
