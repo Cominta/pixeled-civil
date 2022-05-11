@@ -6,7 +6,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
     this->stateClass = State::state::GAMESTATE;
     this->currentZoom = 1.0f;
 
-    this->tilemap = new TileMap(this->window, 10, 10, this->textures);
+    this->tilemap = new TileMap(this->window, 100, 100, this->textures);
     this->camera = new Camera(this->window, this->bindKeys);
 
     // this->view = new sf::View(sf::FloatRect(0, 0, this->window->getSize().x, this->window->getSize().y));
