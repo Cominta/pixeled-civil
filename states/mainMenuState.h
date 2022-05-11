@@ -11,10 +11,10 @@ class MainState : public State
         std::map<std::string, Button*> buttons;
 
     public:
-        MainState(sf::RenderWindow* window, std::map<std::string, bool>* pressedKeys, std::stack<State*>* states, std::map<std::string, sf::Texture*>* textures);
+        MainState(sf::RenderWindow* window, std::stack<State*>* states, std::map<std::string, int>* bindKeys, std::map<std::string, sf::Texture*>* textures);
         ~MainState();
 
-        void update();
+        void update(bool mouseLeftPress);
         void render();
 };
 

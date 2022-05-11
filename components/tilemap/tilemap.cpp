@@ -3,7 +3,7 @@
 TileMap::TileMap(sf::RenderWindow* window, int sizeX, int sizeY, std::map<std::string, sf::Texture*>* textures)
     : window(window), sizeX(sizeX), sizeY(sizeY), textures(textures)
 {
-    float scale = 2.0f;
+    float scale = 1.0f;
 
     for (int x = 0; x < this->sizeX; x++)
     {

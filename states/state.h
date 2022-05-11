@@ -12,16 +12,25 @@ class State
     protected:
         sf::RenderWindow* window;
         std::map<std::string, sf::Texture*>* textures;
-        std::map<std::string, bool>* pressedKeys;
         std::stack<State*>* states;
-        sf::Vector2f mousePosition;
+        sf::Vector2i mousePosition;
+        std::map<std::string, int>* bindKeys;
 
     public:
-        State(sf::RenderWindow* window, std::map<std::string, bool>* pressedKeys, std::stack<State*>* states, std::map<std::string, sf::Texture*>* textures);
+        enum class state
+        {
+            MAINMENUSTATE,
+            GAMESTATE
+        };
+
+        State::state stateClass;
+
+        State(sf::RenderWindow* window, std::stack<State*>* states, std::map<std::string, int>* bindKeys, std::map<std::string, sf::Texture*>* textures);
         ~State();
 
         void updateMouse();
-        virtual void update();
+        virtual void update(bool mouseLeftPress);
+        virtual void update(float deltaWheel, float delta);
         virtual void render();
 };
 

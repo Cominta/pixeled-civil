@@ -1,1 +1,1 @@
-g++ *.cpp ui/*.cpp states/*.cpp  components/tilemap/*.cpp -o build/windows/main.exe -LD:\lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
+g++ *.cpp ui/*.cpp states/*.cpp  components/tilemap/*.cpp components/camera/*.cpp -o build/windows/main.exe -LD:\lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d

@@ -37,10 +37,10 @@ class Button
         Button(sf::RenderWindow* window, Button::bClass buttonClass, float x, float y, float scale, sf::Texture* idle, sf::Texture* hover = nullptr, sf::Texture* active = nullptr);
         ~Button();
 
-        bool isHover(sf::Vector2f mousePosition);
+        bool isHover(sf::Vector2i mousePosition);
         void setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* active);
 
-        void update(sf::Vector2f mousePosition, bool mousePressed);
+        void update(sf::Vector2i mousePosition, bool mousePressed);
         void render();
 };
 

@@ -2,12 +2,12 @@
 
 Engine::Engine()
 {
-    this->window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Pixeled civil", sf::Style::Fullscreen);
+    this->window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Pixeled civil", sf::Style::Default);
 
     this->loadTextures();
     this->initKeys();
 
-    this->states.push(new MainState(this->window, &this->pressedKeys, &this->states, &this->textures));
+    this->states.push(new MainState(this->window, &this->states, &this->bindKeys, &this->textures));
 }
 
 Engine::~Engine()
@@ -36,16 +36,35 @@ void Engine::loadTextures()
 
 void Engine::initKeys()
 {
-    this->pressedKeys["mouse-left"] = false;
+
+    std::ifstream keys;
+    keys.open("config/gamestate-keys.ini");
+
+    if (keys.is_open())
+    {   
+        std::string name;
+        int key;
+
+        while (keys >> name >> key)
+        {
+            this->bindKeys[name] = key;
+        }
+    }
 }
 
 void Engine::start()
 {
     while (this->window->isOpen())
     {
+        this->updateDelta();
         this->update();
         this->render();
     }
+}
+
+void Engine::updateDelta()
+{
+    this->delta = this->dtClock.restart().asSeconds();
 }
 
 void Engine::updateSFML()
@@ -57,9 +76,14 @@ void Engine::updateSFML()
             this->window->close();
         }
 
-        if (this->sfEvent.mouseButton.button == sf::Mouse::Left)
+        if (this->sfEvent.mouseButton.button == sf::Mouse::Button::Left && this->sfEvent.type == sf::Event::MouseButtonReleased)
         {
-            this->pressedKeys["mouse-left"] = true;
+            this->mouseLeftPress = true;
+        }
+
+        if (this->sfEvent.mouseWheelScroll.delta != 0)
+        {
+            this->deltaWheel = this->sfEvent.mouseWheelScroll.delta;
         }
     }
 }
@@ -70,13 +94,19 @@ void Engine::update()
 
     if (!this->states.empty())
     {
-        this->states.top()->update();
+        if (this->states.top()->stateClass == State::state::GAMESTATE)
+        {
+            this->states.top()->update(this->deltaWheel, this->delta);
+        }
+        
+        else
+        {
+            this->states.top()->update(this->mouseLeftPress);
+        }
     }
 
-    for (auto &pair : this->pressedKeys)
-    {
-        pair.second = false;
-    }
+    this->deltaWheel = 0;
+    this->mouseLeftPress = false;
 }
 
 void Engine::render()

@@ -19,9 +19,9 @@ Button::~Button()
 
 }
 
-bool Button::isHover(sf::Vector2f mousePosition)
+bool Button::isHover(sf::Vector2i mousePosition)
 {
-    if (this->sprite->getGlobalBounds().contains(mousePosition))
+    if (this->sprite->getGlobalBounds().contains(mousePosition.x, mousePosition.y))
     {
         return true;
     }
@@ -36,7 +36,7 @@ void Button::setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* acti
     this->active = active;
 }
 
-void Button::update(sf::Vector2f mousePosition, bool mousePressed)
+void Button::update(sf::Vector2i mousePosition, bool mousePressed)
 {
     if (this->isHover(mousePosition))
     {
