@@ -15,6 +15,8 @@ class Camera
         float speed;
 
     public:
+        float scaleFactor;
+        
         Camera(sf::RenderWindow* window, std::map<std::string, int>* bindKeys);
         ~Camera();
 

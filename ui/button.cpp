@@ -36,11 +36,6 @@ void Button::setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* acti
     this->active = active;
 }
 
-void Button::setPosition(float x, float y)
-{
-    this->sprite->setPosition(x, y);
-}
-
 void Button::update(sf::Vector2i mousePosition, bool mousePressed)
 {
     if (this->isHover(mousePosition))

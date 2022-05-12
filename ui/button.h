@@ -40,7 +40,8 @@ class Button
 
         bool isHover(sf::Vector2i mousePosition);
         void setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* active);
-        void setPosition(float x, float y);
+        void setPosition(float x, float y) {this->sprite->setPosition(x, y);};
+        void setScale(float scaleX, float scaleY) {this->sprite->setScale(scaleX, scaleY);};
 
         void update(sf::Vector2i mousePosition, bool mousePressed);
         void render();

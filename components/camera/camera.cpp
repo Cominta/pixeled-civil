@@ -5,7 +5,8 @@ Camera::Camera(sf::RenderWindow* window, std::map<std::string, int>* bindKeys)
 {
     this->currentSpeedX = 0;
     this->currentSpeedY = 0;
-    this->speed = 300.0f;
+    this->speed = 400.0f;
+    this->scaleFactor = 100;
 }
 
 Camera::~Camera()
@@ -16,43 +17,46 @@ Camera::~Camera()
 void Camera::update(float delta, float deltaWheel)
 {
     sf::View view {this->window->getView()};
-    
+
     if (deltaWheel > 0)
     {
-        view.zoom(0.9f);
+        view.setSize(view.getSize().x - this->scaleFactor, view.getSize().y - this->scaleFactor);
     }
 
     else if (deltaWheel < 0)
     {
-        view.zoom(1.101f);
+        view.setSize(view.getSize().x + this->scaleFactor, view.getSize().y + this->scaleFactor);
     }
 
-    bool move = false;
+
+    float moveFast = 0.0f;
+
+    if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-fast")))
+    {
+        moveFast = 300.0f;
+    }
+
     this->currentSpeedX = 0;
     this->currentSpeedY = 0;
 
     if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-left")))
     {
-        this->currentSpeedX = -this->speed * delta;
-        move = true;
+        this->currentSpeedX = (-this->speed - moveFast) * delta;
     }
 
     else if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-right")))
     { 
-        this->currentSpeedX = this->speed * delta;
-        move = true;
+        this->currentSpeedX = (this->speed + moveFast) * delta;
     }
 
     if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-bottom")))
     {
-        this->currentSpeedY = this->speed * delta;
-        move = true;
+        this->currentSpeedY = (this->speed + moveFast) * delta;
     }
 
     else if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-top")))
     {
-        this->currentSpeedY = -this->speed * delta;
-        move = true;
+        this->currentSpeedY = (-this->speed - moveFast) * delta;
     }
 
     // else if (!move)
