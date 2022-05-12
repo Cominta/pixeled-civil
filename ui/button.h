@@ -28,7 +28,8 @@ class Button
 
         enum class bClass
         {
-            PLAY
+            PLAY,
+            BUILD
         };
 
         Button::states state;
@@ -39,6 +40,7 @@ class Button
 
         bool isHover(sf::Vector2i mousePosition);
         void setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* active);
+        void setPosition(float x, float y);
 
         void update(sf::Vector2i mousePosition, bool mousePressed);
         void render();

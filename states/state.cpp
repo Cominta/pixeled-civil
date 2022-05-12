@@ -22,7 +22,7 @@ void State::update(bool mouseLeftPress)
 
 }
 
-void State::update(float deltaWheel, float delta)
+void State::update(float deltaWheel, float delta, bool mouseLeftPress)
 {
 
 }

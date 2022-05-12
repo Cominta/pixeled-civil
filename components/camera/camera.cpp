@@ -13,9 +13,19 @@ Camera::~Camera()
 
 }
 
-void Camera::update(float delta)
+void Camera::update(float delta, float deltaWheel)
 {
     sf::View view {this->window->getView()};
+    
+    if (deltaWheel > 0)
+    {
+        view.zoom(0.9f);
+    }
+
+    else if (deltaWheel < 0)
+    {
+        view.zoom(1.101f);
+    }
 
     bool move = false;
     this->currentSpeedX = 0;
@@ -27,8 +37,8 @@ void Camera::update(float delta)
         move = true;
     }
 
-    if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-right")))
-    {
+    else if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-right")))
+    { 
         this->currentSpeedX = this->speed * delta;
         move = true;
     }
@@ -39,7 +49,7 @@ void Camera::update(float delta)
         move = true;
     }
 
-    if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-top")))
+    else if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)this->bindKeys->at("camera-move-top")))
     {
         this->currentSpeedY = -this->speed * delta;
         move = true;

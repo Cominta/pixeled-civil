@@ -4,6 +4,7 @@
 #include "state.h"
 #include "../components/tilemap/tilemap.h"
 #include "../components/camera/camera.h"
+#include "../ui/button.h"
 
 class GameState : public State
 {
@@ -11,6 +12,7 @@ class GameState : public State
         TileMap* tilemap;
         sf::View* view;
         Camera* camera;
+        std::map<std::string, Button*> buttons;
 
         float currentZoom;
 
@@ -18,7 +20,7 @@ class GameState : public State
         GameState(sf::RenderWindow* window, std::stack<State*>* states, std::map<std::string, int>* bindKeys, std::map<std::string, sf::Texture*>* textures);
         ~GameState();
 
-        void update(float deltaWheel, float delta);
+        void update(float deltaWheel, float delta, bool mouseLeftPress);
         void render();
 };
 

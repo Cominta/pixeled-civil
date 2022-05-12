@@ -11,6 +11,8 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
 
     // this->view = new sf::View(sf::FloatRect(0, 0, this->window->getSize().x, this->window->getSize().y));
     // this->view->setCenter(0, 0);
+
+    this->buttons["build-button"] = new Button(this->window, Button::bClass::BUILD, 0.0f, 0.0f, 1.0f, this->textures->at("build-button"));
 }
 
 GameState::~GameState()
@@ -18,13 +20,17 @@ GameState::~GameState()
 
 }
 
-void GameState::update(float deltaWheel, float delta)
+void GameState::update(float deltaWheel, float delta, bool mouseLeftPress)
 {
     this->updateMouse();
-    this->camera->update(delta);
+    this->camera->update(delta, deltaWheel);
+
+    sf::Vector2f pos = this->window->mapPixelToCoords(sf::Vector2i(50, 50));
+    this->buttons["build-button"]->setPosition(pos.x, pos.y);
 }
 
 void GameState::render()
 {
     this->tilemap->render();
+    this->buttons["build-button"]->render();
 }

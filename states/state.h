@@ -30,7 +30,7 @@ class State
 
         void updateMouse();
         virtual void update(bool mouseLeftPress);
-        virtual void update(float deltaWheel, float delta);
+        virtual void update(float deltaWheel, float delta, bool mouseLeftPress);
         virtual void render();
 };
 

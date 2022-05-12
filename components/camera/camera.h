@@ -18,7 +18,7 @@ class Camera
         Camera(sf::RenderWindow* window, std::map<std::string, int>* bindKeys);
         ~Camera();
 
-        void update(float delta);
+        void update(float delta, float deltaWheel);
 };
 
 #endif

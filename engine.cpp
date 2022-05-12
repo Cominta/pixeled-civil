@@ -19,12 +19,16 @@ void Engine::loadTextures()
 {
     std::vector<std::string> names = {
         "main-play-button",
-        "grass"
+        "build-button",
+        "grass",
+        "path-level-1"
     };
 
     std::vector<std::string> paths = {
         "resources/main-menu-ui/buttons/play-button.png",
-        "resources/tiles/grass.png"
+        "resources/game-state-ui/buttons/build-button.png",
+        "resources/tiles/grass.png",
+        "resources/tiles/buildings/path-level-1.png"
     };
 
     for (int i = 0; i < names.size(); i++)
@@ -96,7 +100,7 @@ void Engine::update()
     {
         if (this->states.top()->stateClass == State::state::GAMESTATE)
         {
-            this->states.top()->update(this->deltaWheel, this->delta);
+            this->states.top()->update(this->deltaWheel, this->delta, this->mouseLeftPress);
         }
         
         else
