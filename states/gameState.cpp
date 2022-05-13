@@ -4,7 +4,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
     : State(window, states, bindKeys, textures)
 {
     this->stateClass = State::state::GAMESTATE;
-    this->currentZoom = 1.0f;
+    this->buildMenuToogle = false;
 
     this->tilemap = new TileMap(this->window, 100, 100, this->textures);
     this->camera = new Camera(this->window, this->bindKeys);
@@ -13,11 +13,19 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
     // this->view->setCenter(0, 0);
 
     this->buttons["build-button"] = new Button(this->window, Button::bClass::BUILD, 0.0f, 0.0f, 1.0f, this->textures->at("build-button"));
+    this->buildMenu = new DropDownBuildMenu(this->window, 430.0f, 220.0f, 10.0f, 92.0f); // 2 line, 6 items
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
 }
 
 GameState::~GameState()
 {
-    
+
 }
 
 void GameState::update(float deltaWheel, float delta, bool mouseLeftPress)
@@ -25,13 +33,29 @@ void GameState::update(float deltaWheel, float delta, bool mouseLeftPress)
     this->updateMouse();
     this->camera->update(delta, deltaWheel);
 
-    sf::Vector2f pos = this->window->mapPixelToCoords(sf::Vector2i(50, 50));
+    float scaleX = this->window->getView().getSize().x / this->camera->scaleFactor / 18.0f;
+    float scaleY = this->window->getView().getSize().y / this->camera->scaleFactor / 10;
+
+    sf::Vector2f pos = this->window->mapPixelToCoords(sf::Vector2i(10, 10));
     this->buttons["build-button"]->setPosition(pos.x, pos.y);
-    this->buttons["build-button"]->setScale(this->window->getView().getSize().x / this->camera->scaleFactor / 10, this->window->getView().getSize().y / this->camera->scaleFactor / 10);
+    this->buttons["build-button"]->setScale(scaleX, scaleY);
+    this->buttons["build-button"]->update(this->mousePosition, mouseLeftPress);
+
+    this->buildMenu->update(scaleX, scaleY);
+
+    if (this->buttons["build-button"]->state == Button::states::ACTIVE)
+    {
+        this->buildMenuToogle = !this->buildMenuToogle;
+    }
 }
 
 void GameState::render()
 {
     this->tilemap->render();
     this->buttons["build-button"]->render();
+
+    if (this->buildMenuToogle)
+    {
+        this->buildMenu->render();
+    }
 }

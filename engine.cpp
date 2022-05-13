@@ -2,7 +2,7 @@
 
 Engine::Engine()
 {
-    this->window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Pixeled civil", sf::Style::Default);
+    this->window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "Pixeled civil", sf::Style::Fullscreen);
 
     this->loadTextures();
     this->initKeys();

@@ -5,6 +5,7 @@
 #include "../components/tilemap/tilemap.h"
 #include "../components/camera/camera.h"
 #include "../ui/button.h"
+#include "../ui/dropDownBuildMenu.h"
 
 class GameState : public State
 {
@@ -13,8 +14,9 @@ class GameState : public State
         sf::View* view;
         Camera* camera;
         std::map<std::string, Button*> buttons;
+        DropDownBuildMenu* buildMenu;
 
-        float currentZoom;
+        bool buildMenuToogle;
 
     public:
         GameState(sf::RenderWindow* window, std::stack<State*>* states, std::map<std::string, int>* bindKeys, std::map<std::string, sf::Texture*>* textures);

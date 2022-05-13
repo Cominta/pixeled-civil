@@ -9,9 +9,11 @@ Button::Button(sf::RenderWindow* window, Button::bClass buttonClass, float x, fl
     this->sprite->setTexture(*this->idle);
     this->sprite->setPosition(this->x, this->y);
     this->sprite->setScale(this->scale, this->scale);
-    this->sprite->setOrigin(this->sprite->getTexture()->getSize().x / 2, this->sprite->getTexture()->getSize().y / 2);
+    // this->sprite->setOrigin(this->sprite->getTexture()->getSize().x / 2, this->sprite->getTexture()->getSize().y / 2);
 
     this->state = Button::states::IDLE;
+
+    this->size = 64;
 }
 
 Button::~Button()
@@ -19,7 +21,7 @@ Button::~Button()
 
 }
 
-bool Button::isHover(sf::Vector2i mousePosition)
+bool Button::isHover(sf::Vector2f mousePosition)
 {
     if (this->sprite->getGlobalBounds().contains(mousePosition.x, mousePosition.y))
     {
@@ -36,8 +38,10 @@ void Button::setTexture(sf::Texture* idle, sf::Texture* hover, sf::Texture* acti
     this->active = active;
 }
 
-void Button::update(sf::Vector2i mousePosition, bool mousePressed)
+void Button::update(sf::Vector2f mousePosition, bool mousePressed)
 {
+    this->state = Button::states::IDLE;
+
     if (this->isHover(mousePosition))
     {
         if (mousePressed)

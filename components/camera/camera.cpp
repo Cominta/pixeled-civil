@@ -20,12 +20,14 @@ void Camera::update(float delta, float deltaWheel)
 
     if (deltaWheel > 0)
     {
-        view.setSize(view.getSize().x - this->scaleFactor, view.getSize().y - this->scaleFactor);
+        // view.setSize(view.getSize().x - this->scaleFactor, view.getSize().y - this->scaleFactor);
+        view.zoom(0.9f);
     }
 
     else if (deltaWheel < 0)
     {
-        view.setSize(view.getSize().x + this->scaleFactor, view.getSize().y + this->scaleFactor);
+        // view.setSize(view.getSize().x + this->scaleFactor, view.getSize().y + this->scaleFactor);
+        view.zoom(1.101f);
     }
 
 

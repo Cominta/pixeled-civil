@@ -13,7 +13,7 @@ class State
         sf::RenderWindow* window;
         std::map<std::string, sf::Texture*>* textures;
         std::stack<State*>* states;
-        sf::Vector2i mousePosition;
+        sf::Vector2f mousePosition;
         std::map<std::string, int>* bindKeys;
 
     public:
