@@ -19,6 +19,8 @@ class TileMap
         TileMap(sf::RenderWindow* window, int sizeX, int sizeY, std::map<std::string, sf::Texture*>* textures);
         ~TileMap();
 
+        Tile* intersect(sf::Vector2f mousePosition);
+
         void update();
         void render();
 };

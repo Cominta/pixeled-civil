@@ -55,7 +55,7 @@ void DropDownBuildMenu::addItem(std::string name, sf::Texture* icon)
     }
 }
 
-void DropDownBuildMenu::update(float scaleX, float scaleY)
+DropDownBuildMenu::Item* DropDownBuildMenu::update(float scaleX, float scaleY, sf::Vector2f mousePosition, bool mouseLeftPress)
 {
     sf::Vector2f pos = this->window->mapPixelToCoords(sf::Vector2i(10, 92));
     this->background->setPosition(pos.x, pos.y);
@@ -88,7 +88,12 @@ void DropDownBuildMenu::update(float scaleX, float scaleY)
                 this->grid.at(x).at(y)->text.setScale(scaleX, scaleY);
                 this->grid.at(x).at(y)->text.setPosition(posText.x, posText.y);
 
-                // std::cout << this->grid.at(x).at(y)->button->getSize().x * scaleX  << "\n";
+                this->grid.at(x).at(y)->button->update(mousePosition, mouseLeftPress);
+
+                if (this->grid.at(x).at(y)->button->state == Button::states::ACTIVE)
+                {
+                    return this->grid.at(x).at(y);
+                }
             }
         }
     }

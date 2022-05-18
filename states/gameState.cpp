@@ -5,6 +5,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
 {
     this->stateClass = State::state::GAMESTATE;
     this->buildMenuToogle = false;
+    this->build = false;
 
     this->tilemap = new TileMap(this->window, 100, 100, this->textures);
     this->camera = new Camera(this->window, this->bindKeys);
@@ -14,13 +15,15 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states, std::
 
     this->buttons["build-button"] = new Button(this->window, Button::bClass::BUILD, 0.0f, 0.0f, 1.0f, this->textures->at("build-button"));
     this->buildMenu = new DropDownBuildMenu(this->window, 430.0f, 220.0f, 10.0f, 92.0f); // 2 line, 6 items
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
-    this->buildMenu->addItem("Path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+    this->buildMenu->addItem("path", this->textures->at("path-level-1"));
+
+    this->buildComponent = new BuildComponent(this->tilemap);
 }
 
 GameState::~GameState()
@@ -41,11 +44,29 @@ void GameState::update(float deltaWheel, float delta, bool mouseLeftPress)
     this->buttons["build-button"]->setScale(scaleX, scaleY);
     this->buttons["build-button"]->update(this->mousePosition, mouseLeftPress);
 
-    this->buildMenu->update(scaleX, scaleY);
-
     if (this->buttons["build-button"]->state == Button::states::ACTIVE)
     {
         this->buildMenuToogle = !this->buildMenuToogle;
+    }
+
+    if (this->buildMenuToogle)
+    {
+        DropDownBuildMenu::Item* activeItem = this->buildMenu->update(scaleX, scaleY, this->mousePosition, mouseLeftPress);
+
+        if (activeItem)
+        {
+            Building* building;
+
+            if (activeItem->name == "path")
+            {
+                building = new Path(this->textures->at("path-level-1"), Tile::tClass::PATH);
+            }
+
+            mouseLeftPress = false;
+            this->buildComponent->build(building);
+        }
+
+        this->buildComponent->update(this->mousePosition, mouseLeftPress);
     }
 }
 

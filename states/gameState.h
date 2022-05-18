@@ -6,6 +6,7 @@
 #include "../components/camera/camera.h"
 #include "../ui/button.h"
 #include "../ui/dropDownBuildMenu.h"
+#include "../components/buildComponent/buildComponent.h"
 
 class GameState : public State
 {
@@ -15,8 +16,10 @@ class GameState : public State
         Camera* camera;
         std::map<std::string, Button*> buttons;
         DropDownBuildMenu* buildMenu;
+        BuildComponent* buildComponent;
 
         bool buildMenuToogle;
+        bool build;
 
     public:
         GameState(sf::RenderWindow* window, std::stack<State*>* states, std::map<std::string, int>* bindKeys, std::map<std::string, sf::Texture*>* textures);

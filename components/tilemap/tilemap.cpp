@@ -20,6 +20,20 @@ TileMap::~TileMap()
 
 }
 
+Tile* TileMap::intersect(sf::Vector2f mousePosition)
+{
+    for (auto &column : this->tiles)
+    {
+        for (auto &item : column)
+        {
+            if (item->getSprite()->getGlobalBounds().intersects(sf::FloatRect(mousePosition, sf::Vector2f(5, 5))))
+            {
+                return item;
+            }
+        }
+    }
+}
+
 void TileMap::update()
 {
 

@@ -38,7 +38,7 @@ class DropDownBuildMenu
         void setPosition(float x, float y) {this->background->setPosition(x, y);};
         void setScale(float scaleX, float scaleY) {this->background->setScale(scaleX, scaleY);};
 
-        void update(float scaleX, float scaleY);
+        DropDownBuildMenu::Item* update(float scaleX, float scaleY, sf::Vector2f mousePosition, bool mouseLeftPress);
         void render();
 };
 
